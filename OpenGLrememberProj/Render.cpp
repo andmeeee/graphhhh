@@ -305,6 +305,13 @@ void initRender(OpenGL *ogl)
 
 
 
+Vector3 getNormal(double* start, double* end1, double* end2)
+{
+	Vector3 a = Vector3(start[0] - end1[0], start[1] - end1[1], start[2] - end1[2]);
+	Vector3 b = Vector3(start[0] - end2[0], start[1] - end2[1], start[2] - end2[2]);
+	Vector3 normal = Vector3(a.Y() * b.Z() - b.Y() * a.Z(), -a.X() * b.Z() + b.X() * a.Z(), a.X() * b.Y() - a.Y() * b.X());
+	return normal;
+}
 
 void Render(OpenGL *ogl)
 {
@@ -348,27 +355,152 @@ void Render(OpenGL *ogl)
 	//===================================
 	//ѕрогать тут  
 
+	double A[] = { 1, 0, 0 };
+	double B[] = { 0, 5, 0 };
+	double C[] = { 7, 6, 0 };
+	double D[] = { 5, 8, 0 };
+	double E[] = { 8, 10, 0 };
+	double F[] = { 4, 15, 0 };
+	double G[] = { 13, 4, 0 };
+	double H[] = { 14, 12, 0 };
 
-	//Ќачало рисовани€ квадратика станкина
-	double A[2] = { -4, -4 };
-	double B[2] = { 4, -4 };
-	double C[2] = { 4, 4 };
-	double D[2] = { -4, 4 };
+	double A1[] = { 1, 0, 5 };
+	double B1[] = { 0, 5, 5 };
+	double C1[] = { 7, 6, 5 };
+	double D1[] = { 5, 8, 5 };
+	double E1[] = { 8, 10, 5 };
+	double F1[] = { 4, 15, 5 };
+	double G1[] = { 13, 4, 5 };
+	double H1[] = { 14, 12, 5 };
+
+
+	glBegin(GL_TRIANGLES);
+	
+	glColor3d(0.2, 0.7, 0.8);
+
+	glVertex3dv(A);
+	glVertex3dv(B);
+	glVertex3dv(C);
+
+	glVertex3dv(C);
+	glVertex3dv(B);
+	glVertex3dv(D);
+
+	glVertex3dv(C);
+	glVertex3dv(D);
+	glVertex3dv(E);
+
+	glVertex3dv(E);
+	glVertex3dv(D);
+	glVertex3dv(F);
+
+	glVertex3dv(G);
+	glVertex3dv(C);
+	glVertex3dv(E);
+
+	glVertex3dv(G);
+	glVertex3dv(E);
+	glVertex3dv(H);
+
+	glEnd();
+
+
+	glBegin(GL_TRIANGLES);
+
+	glColor3d(0.2, 0.7, 0.8);
+
+	glVertex3dv(A1);
+	glVertex3dv(B1);
+	glVertex3dv(C1);
+
+	glVertex3dv(C1);
+	glVertex3dv(B1);
+	glVertex3dv(D1);
+
+	glVertex3dv(C1);
+	glVertex3dv(D1);
+	glVertex3dv(E1);
+
+	glVertex3dv(E1);
+	glVertex3dv(D1);
+	glVertex3dv(F1);
+
+	glVertex3dv(G1);
+	glVertex3dv(C1);
+	glVertex3dv(E1);
+
+	glVertex3dv(G1);
+	glVertex3dv(E1);
+	glVertex3dv(H1);
+
+	glEnd();
+
+
+	Vector3 normal;
 
 	glBindTexture(GL_TEXTURE_2D, texId);
 
-	glColor3d(0.6, 0.6, 0.6);
 	glBegin(GL_QUADS);
 
-	glNormal3d(0, 0, 1);
-	glTexCoord2d(0, 0);
-	glVertex2dv(A);
+	glColor3d(0.2, 0.7, 0.8);
+
+
+	normal = getNormal(A, A1, B);
+	glNormal3d(normal.X(), normal.Y(), normal.Z());
 	glTexCoord2d(1, 0);
-	glVertex2dv(B);
-	glTexCoord2d(1, 1);
-	glVertex2dv(C);
-	glTexCoord2d(0, 1);
-	glVertex2dv(D);
+	glVertex3dv(A);
+	glVertex3dv(B);
+	glVertex3dv(B1);
+	glVertex3dv(A1);
+
+	normal = getNormal(B, B1, D);
+	glNormal3d(normal.X(), normal.Y(), normal.Z());
+	glVertex3dv(B);
+	glVertex3dv(D);
+	glVertex3dv(D1);
+	glVertex3dv(B1);
+
+	normal = getNormal(D, D1, F);
+	glNormal3d(normal.X(), normal.Y(), normal.Z());
+	glVertex3dv(D);
+	glVertex3dv(F);
+	glVertex3dv(F1);
+	glVertex3dv(D1);
+
+	normal = getNormal(F, F1, E);
+	glNormal3d(normal.X(), normal.Y(), normal.Z());
+	glVertex3dv(F);
+	glVertex3dv(E);
+	glVertex3dv(E1);
+	glVertex3dv(F1);
+
+	normal = getNormal(E, E1, H);
+	glNormal3d(normal.X(), normal.Y(), normal.Z());
+	glVertex3dv(E);
+	glVertex3dv(H);
+	glVertex3dv(H1);
+	glVertex3dv(E1);
+
+	normal = getNormal(H, H1, G);
+	glNormal3d(normal.X(), normal.Y(), normal.Z());
+	glVertex3dv(H);
+	glVertex3dv(G);
+	glVertex3dv(G1);
+	glVertex3dv(H1);
+
+	normal = getNormal(G, G1, C);
+	glNormal3d(normal.X(), normal.Y(), normal.Z());
+	glVertex3dv(G);
+	glVertex3dv(C);
+	glVertex3dv(C1);
+	glVertex3dv(G1);
+
+	normal = getNormal(C, C1, A);
+	glNormal3d(normal.X(), normal.Y(), normal.Z());
+	glVertex3dv(C);
+	glVertex3dv(A);
+	glVertex3dv(A1);
+	glVertex3dv(C1);
 
 	glEnd();
 	//конец рисовани€ квадратика станкина
